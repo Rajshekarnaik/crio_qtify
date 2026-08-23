@@ -49,8 +49,7 @@ const Section = ({ title, dataSource, type = "album" }) => {
       } else {
         setFilteredData(
           data.filter(
-            (song) =>
-              song.genre && song.genre.key === selectedFilter.key
+            (song) => song.genre && song.genre.key === selectedFilter.key
           )
         );
       }
