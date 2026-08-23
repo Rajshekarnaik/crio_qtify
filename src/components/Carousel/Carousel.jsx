@@ -16,7 +16,7 @@ const Controls = ({ data }) => {
   return <></>;
 };
 
-const Carousel = ({ data, type }) => {
+const Carousel = ({ data, type, renderComponent }) => {
   return (
     <div className={styles.wrapper}>
       <Swiper
@@ -30,7 +30,9 @@ const Carousel = ({ data, type }) => {
         <CarouselRightNavigation />
         {data.map((item) => (
           <SwiperSlide key={item.id} className={styles.slide}>
-            <Card data={item} type={type} />
+            {renderComponent
+              ? renderComponent(item)
+              : <Card data={item} type={type} />}
           </SwiperSlide>
         ))}
       </Swiper>

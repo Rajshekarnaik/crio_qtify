@@ -9,7 +9,7 @@ import styles from "./Section.module.css";
 const Section = ({ title, dataSource, type = "album" }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true); // true = Carousel mode (shows "Show All")
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState([{ key: "all", label: "All" }]);
   const [selectedFilterIndex, setSelectedFilterIndex] = useState(0);
@@ -64,7 +64,7 @@ const Section = ({ title, dataSource, type = "album" }) => {
         <h3>{title}</h3>
         {type !== "song" && (
           <h4 className={styles.toggleText} onClick={handleToggle}>
-            {!toggle ? "Show All" : "Collapse"}
+            {toggle ? "Show All" : "Collapse"}
           </h4>
         )}
       </div>
@@ -85,14 +85,17 @@ const Section = ({ title, dataSource, type = "album" }) => {
         </div>
       ) : (
         <div className={styles.cardsWrapper}>
-          {toggle && type !== "song" ? (
+          {!toggle && type !== "song" ? (
             <div className={styles.grid}>
               {filteredData.map((item) => (
                 <Card key={item.id} data={item} type={type} />
               ))}
             </div>
           ) : (
-            <Carousel data={filteredData} type={type} />
+            <Carousel
+              data={filteredData}
+              renderComponent={(item) => <Card data={item} type={type} />}
+            />
           )}
         </div>
       )}
