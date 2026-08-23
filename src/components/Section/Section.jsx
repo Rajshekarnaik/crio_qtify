@@ -9,18 +9,22 @@ const Section = ({ title, dataSource }) => {
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(dataSource);
-      setData(response.data);
-      setLoading(false);
-    } catch (e) {
-      console.error(e);
-      setLoading(false);
-    }
+  const handleToggle = () => {
+    setToggle((prev) => !prev);
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(dataSource);
+        setData(response.data);
+        setLoading(false);
+      } catch (e) {
+        console.error(e);
+        setLoading(false);
+      }
+    };
+
     fetchData();
   }, [dataSource]);
 
@@ -28,7 +32,7 @@ const Section = ({ title, dataSource }) => {
     <div className={styles.section}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <h4 className={styles.toggleText} onClick={() => setToggle((prev) => !prev)}>
+        <h4 className={styles.toggleText} onClick={handleToggle}>
           {toggle ? "Collapse" : "Show All"}
         </h4>
       </div>
